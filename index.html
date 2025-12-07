@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>퍼센트 계산기</title>
+    <style>
+        body { font-family: Arial; padding: 20px; display: flex; gap: 50px; }
+        .box {
+            width: 300px;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+        }
+        input { margin: 5px 0; padding: 8px; width: 100%; }
+        button { padding: 10px 15px; margin-top: 10px; width: 100%; }
+        .result { margin-top: 15px; font-size: 1.2em; font-weight: bold; }
+    </style>
+</head>
+<body>
+
+    <!-- 왼쪽: 금액 + 퍼센트 → 결과 -->
+    <div class="box">
+        <h2>퍼센트 계산기</h2>
+
+        <label>금액 입력:</label>
+        <input type="number" id="amount" placeholder="예: 10000">
+
+        <label>퍼센트 입력 (%):</label>
+        <input type="number" id="percent" placeholder="예: 10">
+
+        <button onclick="calculate()">계산하기</button>
+
+        <div id="result" class="result"></div>
+    </div>
+
+    <!-- 오른쪽: 금액 + 결과 → 퍼센트 계산 -->
+    <div class="box">
+        <h2>퍼센트 역계산</h2>
+
+        <label>원래 금액:</label>
+        <input type="number" id="amount2" placeholder="예: 10000">
+
+        <label>결과 금액:</label>
+        <input type="number" id="resultValue" placeholder="예: 1500">
+
+        <button onclick="reverseCalc()">퍼센트 구하기</button>
+
+        <div id="percentResult" class="result"></div>
+    </div>
+
+    <script>
+        // 금액 + 퍼센트 → 결과
+        function calculate() {
+            const amount = parseFloat(document.getElementById('amount').value);
+            const percent = parseFloat(document.getElementById('percent').value);
+
+            if (isNaN(amount) || isNaN(percent)) {
+                document.getElementById('result').innerHTML = "값을 정확히 입력해주세요.";
+                return;
+            }
+
+            const result = amount * (percent / 100);
+            document.getElementById('result').innerHTML =
+                `결과: <strong>${result.toLocaleString()} 원</strong>`;
+        }
+
+        // 금액 + 결과 → 퍼센트 역계산
+        function reverseCalc() {
+            const amount2 = parseFloat(document.getElementById('amount2').value);
+            const resultValue = parseFloat(document.getElementById('resultValue').value);
+
+            if (isNaN(amount2) || isNaN(resultValue) || amount2 === 0) {
+                document.getElementById('percentResult').innerHTML = "값을 정확히 입력해주세요.";
+                return;
+            }
+
+            const percent = (resultValue / amount2) * 100;
+            document.getElementById('percentResult').innerHTML =
+                `퍼센트: <strong>${percent.toFixed(2)}%</strong>`;
+        }
+    </script>
+
+</body>
+</html>
